@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Medical AI Chatbot</title>
+
+    <!-- GOOGLE FONT -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Poppins',sans-serif;
+        }
+
+        body{
+
+            background:#f4f7fb;
+
+            display:flex;
+
+            justify-content:center;
+
+            align-items:center;
+
+            min-height:100vh;
+
+            padding:30px;
+        }
+
+        .container{
+
+            width:100%;
+
+            max-width:900px;
+
+            background:white;
+
+            border-radius:20px;
+
+            padding:40px;
+
+            box-shadow:0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .title{
+
+            text-align:center;
+
+            margin-bottom:30px;
+        }
+
+        .title h1{
+
+            color:#1f3c88;
+
+            font-size:40px;
+
+            margin-bottom:10px;
+        }
+
+        .title p{
+
+            color:#555;
+
+            font-size:16px;
+        }
+
+        form{
+
+            margin-top:20px;
+        }
+
+        .form-group{
+
+            margin-bottom:25px;
+        }
+
+        label{
+
+            display:block;
+
+            margin-bottom:10px;
+
+            font-weight:600;
+
+            color:#333;
+        }
+
+        select,
+        input[type="file"],
+        input[type="number"]{
+
+            width:100%;
+
+            padding:14px;
+
+            border:1px solid #ccc;
+
+            border-radius:10px;
+
+            font-size:15px;
+
+            outline:none;
+
+            transition:0.3s;
+        }
+
+        select:focus,
+        input:focus{
+
+            border-color:#1f3c88;
+        }
+
+        .btn{
+
+            width:100%;
+
+            background:#1f3c88;
+
+            color:white;
+
+            padding:15px;
+
+            border:none;
+
+            border-radius:12px;
+
+            font-size:18px;
+
+            font-weight:600;
+
+            cursor:pointer;
+
+            transition:0.3s;
+        }
+
+        .btn:hover{
+
+            background:#163172;
+        }
+
+        .section{
+
+            margin-top:35px;
+
+            padding:25px;
+
+            border-radius:15px;
+        }
+
+        .values{
+
+            background:#eef4ff;
+        }
+
+        .prediction{
+
+            background:#e9fff0;
+        }
+
+        .explanations{
+
+            background:#fff7e8;
+        }
+
+        .precautions{
+
+            background:#ffecec;
+        }
+
+        h2{
+
+            margin-bottom:20px;
+
+            color:#1f3c88;
+        }
+
+        ul{
+
+            list-style:none;
+        }
+
+        ul li{
+
+            margin-bottom:12px;
+
+            padding:12px;
+
+            background:white;
+
+            border-radius:10px;
+
+            color:#333;
+
+            box-shadow:0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .result-text{
+
+            font-size:24px;
+
+            font-weight:700;
+
+            color:#0d7a38;
+        }
+
+        .footer{
+
+            text-align:center;
+
+            margin-top:40px;
+
+            color:#777;
+
+            font-size:14px;
+        }
+
+        @media(max-width:768px){
+
+            .container{
+
+                padding:25px;
+            }
+
+            .title h1{
+
+                font-size:30px;
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- TITLE -->
+
+        <div class="title">
+
+            <h1>Medical AI Chatbot</h1>
+
+            <p>
+                Upload your medical report and get AI-based analysis
+            </p>
+
+        </div>
+
+        <!-- FORM -->
+
+        <form method="POST"
+              enctype="multipart/form-data">
+
+            <!-- DISEASE TYPE -->
+
+            <div class="form-group">
+
+                <label>Select Disease Type</label>
+
+                <select name="disease_type"
+                        required>
+
+                    <option value="">
+                        Choose Disease
+                    </option>
+
+                    <option value="anemia">
+                        Anemia
+                    </option>
+
+                    <option value="diabetes">
+                        Diabetes
+                    </option>
+
+                </select>
+
+            </div>
+
+            <!-- IMAGE -->
+
+            <div class="form-group">
+
+                <label>Upload Medical Report</label>
+
+                <input type="file"
+                       name="report"
+                       required>
+
+            </div>
+
+            <!-- MISSING VALUES -->
+
+            {% if missing_values %}
+
+                <div class="section values">
+
+                    <h2>Enter Missing Values</h2>
+
+                    {% for feature in missing_values %}
+
+                        <div class="form-group">
+
+                            <label>{{ feature }}</label>
+
+                            <input type="number"
+                                   step="any"
+                                   name="{{ feature }}"
+                                   required>
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            {% endif %}
+
+            <!-- BUTTON -->
+
+            <button type="submit"
+                    class="btn">
+
+                Analyze Report
+
+            </button>
+
+        </form>
+
+        <!-- EXTRACTED VALUES -->
+
+        {% if extracted_values %}
+
+        <div class="section values">
+
+            <h2>Extracted Values</h2>
+
+            <ul>
+
+                {% for key, value in extracted_values.items() %}
+
+                    <li>
+
+                        <strong>{{ key }}</strong> :
+                        {{ value }}
+
+                    </li>
+
+                {% endfor %}
+
+            </ul>
+
+        </div>
+
+        {% endif %}
+
+        <!-- PREDICTION -->
+
+        {% if result %}
+
+        <div class="section prediction">
+
+            <h2>Prediction Result</h2>
+
+            <p class="result-text">
+
+                {{ result }}
+
+            </p>
+
+        </div>
+
+        {% endif %}
+
+        <!-- EXPLANATIONS -->
+
+        {% if explanations %}
+
+        <div class="section explanations">
+
+            <h2>Medical Explanation</h2>
+
+            <ul>
+
+                {% for item in explanations %}
+
+                    <li>{{ item }}</li>
+
+                {% endfor %}
+
+            </ul>
+
+        </div>
+
+        {% endif %}
+
+        <!-- PRECAUTIONS -->
+
+        {% if precautions %}
+
+        <div class="section precautions">
+
+            <h2>Precautions</h2>
+
+            <ul>
+
+                {% for item in precautions %}
+
+                    <li>{{ item }}</li>
+
+                {% endfor %}
+
+            </ul>
+
+        </div>
+
+        {% endif %}
+
+        <!-- FOOTER -->
+
+        <div class="footer">
+
+            AI-Based Medical Assistance System
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

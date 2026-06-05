@@ -1,0 +1,7 @@
+echo "__pycache__/
+.ipynb_checkpoints/
+models/
+uploads/
+*.pkl
+*.h5
+*.csv" > .gitignore
