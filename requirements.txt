@@ -5,4 +5,4 @@ pillow
 scikit-learn
 pandas
 numpy
-pickle5
+pickle
