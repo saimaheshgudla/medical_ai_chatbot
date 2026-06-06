@@ -1,444 +1,288 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
-    <title>Medical AI Chatbot</title>
-
-    <!-- GOOGLE FONT -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-          rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical AI Assistant</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
-
-        *{
-            margin:0;
-            padding:0;
-            box-sizing:border-box;
-            font-family:'Poppins',sans-serif;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
         }
 
-        body{
-
-            background:#f4f7fb;
-
-            display:flex;
-
-            justify-content:center;
-
-            align-items:center;
-
-            min-height:100vh;
-
-            padding:30px;
+        body {
+            background: #eef2f7;
+            padding: 40px;
         }
 
-        .container{
-
-            width:100%;
-
-            max-width:900px;
-
-            background:white;
-
-            border-radius:20px;
-
-            padding:40px;
-
-            box-shadow:0 10px 30px rgba(0,0,0,0.1);
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
 
-        .title{
-
-            text-align:center;
-
-            margin-bottom:30px;
+        h1 {
+            text-align: center;
+            color: #163172;
+            margin-bottom: 10px;
         }
 
-        .title h1{
-
-            color:#1f3c88;
-
-            font-size:40px;
-
-            margin-bottom:10px;
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 40px;
         }
 
-        .title p{
-
-            color:#555;
-
-            font-size:16px;
+        h3 {
+            color: #163172;
+            margin-bottom: 20px;
         }
 
-        form{
-
-            margin-top:20px;
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
         }
 
-        .form-group{
-
-            margin-bottom:25px;
+        input, select {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 15px;
         }
 
-        label{
-
-            display:block;
-
-            margin-bottom:10px;
-
-            font-weight:600;
-
-            color:#333;
+        button {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
+            background: #163172;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
         }
 
-        select,
-        input[type="file"],
-        input[type="number"]{
-
-            width:100%;
-
-            padding:14px;
-
-            border:1px solid #ccc;
-
-            border-radius:10px;
-
-            font-size:15px;
-
-            outline:none;
-
-            transition:0.3s;
+        button:hover {
+            background: #10244f;
         }
 
-        select:focus,
-        input:focus{
-
-            border-color:#1f3c88;
+        .card {
+            background: #f8faff;
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 30px;
         }
 
-        .btn{
-
-            width:100%;
-
-            background:#1f3c88;
-
-            color:white;
-
-            padding:15px;
-
-            border:none;
-
-            border-radius:12px;
-
-            font-size:18px;
-
-            font-weight:600;
-
-            cursor:pointer;
-
-            transition:0.3s;
+        .chat {
+            background: #dff6ff;
+            padding: 20px;
+            border-radius: 12px;
+            line-height: 1.8;
+            color: #0b3c5d;
         }
 
-        .btn:hover{
-
-            background:#163172;
+        ul {
+            padding-left: 20px;
         }
 
-        .section{
-
-            margin-top:35px;
-
-            padding:25px;
-
-            border-radius:15px;
+        li {
+            margin-bottom: 10px;
         }
 
-        .values{
-
-            background:#eef4ff;
+        .warning {
+            color: red;
+            font-weight: 600;
         }
 
-        .prediction{
-
-            background:#e9fff0;
+        .result-detected {
+            color: #cc0000;
+            font-size: 20px;
+            font-weight: 700;
+            text-align: center;
+            padding: 15px;
+            background: #fff0f0;
+            border-radius: 10px;
+            margin-bottom: 10px;
         }
 
-        .explanations{
-
-            background:#fff7e8;
+        .result-normal {
+            color: #007a00;
+            font-size: 20px;
+            font-weight: 700;
+            text-align: center;
+            padding: 15px;
+            background: #f0fff0;
+            border-radius: 10px;
+            margin-bottom: 10px;
         }
 
-        .precautions{
-
-            background:#ffecec;
+        .footer {
+            margin-top: 40px;
+            text-align: center;
+            color: #777;
         }
-
-        h2{
-
-            margin-bottom:20px;
-
-            color:#1f3c88;
-        }
-
-        ul{
-
-            list-style:none;
-        }
-
-        ul li{
-
-            margin-bottom:12px;
-
-            padding:12px;
-
-            background:white;
-
-            border-radius:10px;
-
-            color:#333;
-
-            box-shadow:0 2px 5px rgba(0,0,0,0.05);
-        }
-
-        .result-text{
-
-            font-size:24px;
-
-            font-weight:700;
-
-            color:#0d7a38;
-        }
-
-        .footer{
-
-            text-align:center;
-
-            margin-top:40px;
-
-            color:#777;
-
-            font-size:14px;
-        }
-
-        @media(max-width:768px){
-
-            .container{
-
-                padding:25px;
-            }
-
-            .title h1{
-
-                font-size:30px;
-            }
-        }
-
     </style>
-
 </head>
 
 <body>
 
-    <div class="container">
+<div class="container">
 
-        <!-- TITLE -->
+    <h1>Medical AI Assistant</h1>
 
-        <div class="title">
+    <p class="subtitle">
+        Upload medical reports or manually enter values
+    </p>
 
-            <h1>Medical AI Chatbot</h1>
+    <form method="POST" enctype="multipart/form-data">
 
-            <p>
-                Upload your medical report and get AI-based analysis
-            </p>
+        <!-- DISEASE -->
+        <label>Disease Type</label>
+        <select name="disease_type" required>
+            <option value="">Select</option>
+            <option value="anemia" {% if disease_type == "anemia" %}selected{% endif %}>Anemia</option>
+            <option value="diabetes" {% if disease_type == "diabetes" %}selected{% endif %}>Diabetes</option>
+        </select>
 
-        </div>
+        <!-- REPORT -->
+        <label>Upload Report</label>
+        <input type="file" name="report">
 
-        <!-- FORM -->
+        <!-- MANUAL INPUTS -->
+        <div class="card">
 
-        <form method="POST"
-              enctype="multipart/form-data">
+            <h3>Manual Value Entry</h3>
 
-            <!-- DISEASE TYPE -->
+            {% if disease_type == "diabetes" %}
 
-            <div class="form-group">
+                <label>Age</label>
+                <input type="text" name="Age"
+                       value="{{ extracted_values['Age'] if extracted_values['Age'] is not none else '' }}">
 
-                <label>Select Disease Type</label>
+                <label>BMI</label>
+                <input type="text" name="BMI"
+                       value="{{ extracted_values['BMI'] if extracted_values['BMI'] is not none else '' }}">
 
-                <select name="disease_type"
-                        required>
+                <label>HbA1c</label>
+                <input type="text" name="HbA1c"
+                       value="{{ extracted_values['HbA1c'] if extracted_values['HbA1c'] is not none else '' }}">
 
-                    <option value="">
-                        Choose Disease
-                    </option>
+                <label>Glucose</label>
+                <input type="text" name="Glucose"
+                       value="{{ extracted_values['Glucose'] if extracted_values['Glucose'] is not none else '' }}">
 
-                    <option value="anemia">
-                        Anemia
-                    </option>
+                <label>Hypertension (1 = Yes, 0 = No)</label>
+                <input type="text" name="hypertension"
+                       value="{{ extracted_values['hypertension'] if extracted_values['hypertension'] is not none else '' }}">
 
-                    <option value="diabetes">
-                        Diabetes
-                    </option>
+                <label>Heart Disease (1 = Yes, 0 = No)</label>
+                <input type="text" name="heart_disease"
+                       value="{{ extracted_values['heart_disease'] if extracted_values['heart_disease'] is not none else '' }}">
 
-                </select>
+            {% elif disease_type == "anemia" %}
 
-            </div>
+                <label>Hemoglobin</label>
+                <input type="text" name="Hemoglobin"
+                       value="{{ extracted_values['Hemoglobin'] if extracted_values['Hemoglobin'] is not none else '' }}">
 
-            <!-- IMAGE -->
+                <label>MCV</label>
+                <input type="text" name="MCV"
+                       value="{{ extracted_values['MCV'] if extracted_values['MCV'] is not none else '' }}">
 
-            <div class="form-group">
+                <label>MCH</label>
+                <input type="text" name="MCH"
+                       value="{{ extracted_values['MCH'] if extracted_values['MCH'] is not none else '' }}">
 
-                <label>Upload Medical Report</label>
+                <label>MCHC</label>
+                <input type="text" name="MCHC"
+                       value="{{ extracted_values['MCHC'] if extracted_values['MCHC'] is not none else '' }}">
 
-                <input type="file"
-                       name="report"
-                       required>
+            {% else %}
 
-            </div>
-
-            <!-- MISSING VALUES -->
-
-            {% if missing_values %}
-
-                <div class="section values">
-
-                    <h2>Enter Missing Values</h2>
-
-                    {% for feature in missing_values %}
-
-                        <div class="form-group">
-
-                            <label>{{ feature }}</label>
-
-                            <input type="number"
-                                   step="any"
-                                   name="{{ feature }}"
-                                   required>
-
-                        </div>
-
-                    {% endfor %}
-
-                </div>
+                <p style="color:#666;">
+                    Please select a disease type above to see input fields.
+                </p>
 
             {% endif %}
 
-            <!-- BUTTON -->
-
-            <button type="submit"
-                    class="btn">
-
-                Analyze Report
-
-            </button>
-
-        </form>
-
-        <!-- EXTRACTED VALUES -->
-
-        {% if extracted_values %}
-
-        <div class="section values">
-
-            <h2>Extracted Values</h2>
-
-            <ul>
-
-                {% for key, value in extracted_values.items() %}
-
-                    <li>
-
-                        <strong>{{ key }}</strong> :
-                        {{ value }}
-
-                    </li>
-
-                {% endfor %}
-
-            </ul>
-
         </div>
 
+        <button type="submit">Analyze Report</button>
+
+    </form>
+
+    <!-- MISSING VALUES -->
+    {% if missing_values %}
+    <div class="card">
+        <h3 class="warning">Missing Required Values</h3>
+        <ul>
+            {% for item in missing_values %}
+            <li>{{ item }}</li>
+            {% endfor %}
+        </ul>
+        <br>
+        <p>Please enter the missing values above and click Analyze Report again.</p>
+    </div>
+    {% endif %}
+
+    <!-- RESULT -->
+    {% if result %}
+    <div class="card">
+        {% if result in ("Diabetes Detected", "Anemia Detected") %}
+        <div class="result-detected">⚠️ {{ result }}</div>
+        {% else %}
+        <div class="result-normal">✅ {{ result }}</div>
         {% endif %}
+    </div>
+    {% endif %}
 
-        <!-- PREDICTION -->
+    <!-- CHAT -->
+    {% if chatbot_message %}
+    <div class="card">
+        <h3>AI Medical Assistant</h3>
+        <div class="chat">{{ chatbot_message }}</div>
+    </div>
+    {% endif %}
 
-        {% if result %}
+    <!-- EXPLANATIONS -->
+    {% if explanations %}
+    <div class="card">
+        <h3>Medical Explanation</h3>
+        <ul>
+            {% for item in explanations %}
+            <li>{{ item }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
 
-        <div class="section prediction">
+    <!-- PRECAUTIONS -->
+    {% if precautions %}
+    <div class="card">
+        <h3>Precautions</h3>
+        <ul>
+            {% for item in precautions %}
+            <li>{{ item }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
 
-            <h2>Prediction Result</h2>
-
-            <p class="result-text">
-
-                {{ result }}
-
-            </p>
-
-        </div>
-
-        {% endif %}
-
-        <!-- EXPLANATIONS -->
-
-        {% if explanations %}
-
-        <div class="section explanations">
-
-            <h2>Medical Explanation</h2>
-
-            <ul>
-
-                {% for item in explanations %}
-
-                    <li>{{ item }}</li>
-
-                {% endfor %}
-
-            </ul>
-
-        </div>
-
-        {% endif %}
-
-        <!-- PRECAUTIONS -->
-
-        {% if precautions %}
-
-        <div class="section precautions">
-
-            <h2>Precautions</h2>
-
-            <ul>
-
-                {% for item in precautions %}
-
-                    <li>{{ item }}</li>
-
-                {% endfor %}
-
-            </ul>
-
-        </div>
-
-        {% endif %}
-
-        <!-- FOOTER -->
-
-        <div class="footer">
-
-            AI-Based Medical Assistance System
-
-        </div>
-
+    <div class="footer">
+        This system provides AI-assisted analysis and does not replace professional medical advice.
     </div>
 
-</body>
+</div>
 
+</body>
 </html>
